@@ -1,4 +1,4 @@
-[![Travis](https://img.shields.io/travis/kejiasir/YYInfiniteLoopView.svg?style=flat)](https://travis-ci.org/kejiasir/YYInfiniteLoopView)
+[![Build Status](https://travis-ci.org/Kejiasir/YYInfiniteLoopView-demo.svg?branch=master)](https://travis-ci.org/Kejiasir/YYInfiniteLoopView-demo)
 [![CocoaPods](https://img.shields.io/cocoapods/v/YYInfiniteLoopView.svg)](http://cocoadocs.org/docsets/YYInfiniteLoopView)
 [![CocoaPods](https://img.shields.io/cocoapods/p/YYInfiniteLoopView.svg)](http://cocoadocs.org/docsets/YYInfiniteLoopView)
 [![CocoaPods](https://img.shields.io/cocoapods/l/YYInfiniteLoopView.svg)](https://raw.githubusercontent.com/kejiasir/YYInfiniteLoopView/master/LICENSE)
