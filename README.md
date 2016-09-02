@@ -1,3 +1,8 @@
+[![Travis](https://img.shields.io/travis/kejiasir/YYInfiniteLoopView.svg?style=flat)](https://travis-ci.org/kejiasir/YYInfiniteLoopView)
+[![CocoaPods](https://img.shields.io/cocoapods/v/YYInfiniteLoopView.svg)](http://cocoadocs.org/docsets/YYInfiniteLoopView)
+[![CocoaPods](https://img.shields.io/cocoapods/p/YYInfiniteLoopView.svg)](http://cocoadocs.org/docsets/YYInfiniteLoopView)
+[![CocoaPods](https://img.shields.io/cocoapods/l/YYInfiniteLoopView.svg)](https://raw.githubusercontent.com/kejiasir/YYInfiniteLoopView/master/LICENSE)
+
 ## 使用UICollectionView封装的无限轮播视图, 使用简单, 提供多种属性自由设置
 
 ### 如何集成到您的项目 ?
@@ -61,15 +66,15 @@ typedef NS_ENUM(NSUInteger, InfiniteLoopViewPagePosition) {
 /** 蒙版的颜色, 默认为黑色, alpha值0.3 */
 @property (nonatomic, strong) UIColor *coverColor;
 ```
-#### 点击图片跳转到对应的控制器, 有两种方式进行回调可供选择
-  * 第☝️, 使用代理的方式, 只要设置代理, 遵守代理协议 `YYInfiniteLoopViewDelegate`, 实现代理方法即可
+### 点击图片跳转到对应的控制器, 有两种回调方式, 怎么好用怎么来
+  * 第☝️, 使用代理的方式, 只需设置代理, 遵守代理协议 `YYInfiniteLoopViewDelegate`, 实现代理方法即可
 ```objc
 @optional
 /// 代理方法, 获得当前点击的图片索引
 - (void)infiniteLoopView:(YYInfiniteLoopView *)infiniteLoopView
         didSelectedImage:(NSInteger)selectedImageIndex;
 ```
-  * 第✌️, 使用Block 的方式, 即在初始化的时候在即可实现点击事件的回调
+  * 第✌️, 使用Block 的方式, 在初始化的同时即可实现点击事件的回调
 ```objc 
 /// 选中的图片索引, Block回调方式
 typedef void(^didSelectedImage)(NSInteger index);
@@ -134,6 +139,9 @@ typedef void(^didSelectedImage)(NSInteger index);
     // 标题文字的颜色, 默认白色
     // loopView.titleTextColor = [UIColor blueColor];
     
+    // 蒙版颜色, 一般保持默认就好, 最多调整下alpha值咯
+    // loopView.coverColor = RGBAColor(23, 138, 230, 0.4);
+    
     // 标题文字的尺寸, 默认14px
     // loopView.titleTextFont = [UIFont systemFontOfSize:16];
     
@@ -162,8 +170,9 @@ typedef void(^didSelectedImage)(NSInteger index);
     
     [self.scrollView addSubview:loopView];
 ```
-### 预览效果
+### Screenshot
 <img src="001.gif?v=3&s=100" alt="GitHub" title="demo预览效果" width="260" height="480"/>
+
 
 ##License
 **InfiniteLoopView 使用 MIT 许可证，详情见 LICENSE 文件**
