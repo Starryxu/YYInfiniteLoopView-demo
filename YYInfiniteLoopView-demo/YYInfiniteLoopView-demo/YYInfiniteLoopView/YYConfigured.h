@@ -11,7 +11,7 @@
 
 /// YYInfiniteLoopViewCell 重用标识符
 static NSString *const CellIdentifier = @"LayoutCellIdentifier";
-
+/// RGB颜色
 #define RGBAColor(r,g,b,a) [UIColor colorWithRed:(r)/255.0f \
                                            green:(g)/255.0f \
                                             blue:(b)/255.0f \

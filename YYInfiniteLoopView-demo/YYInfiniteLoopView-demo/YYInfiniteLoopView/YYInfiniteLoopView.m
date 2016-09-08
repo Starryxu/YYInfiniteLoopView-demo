@@ -39,7 +39,10 @@
 + (instancetype)infiniteLoopViewWithImageUrls:(NSArray<NSString *> *)imageUrls
                                        titles:(NSArray<NSString *> *)titles
                              didSelectedImage:(didSelectedImage)selectedImage {
-    return [[YYInfiniteLoopView alloc] initWithImageUrls:imageUrls titles:titles didSelectedImage:selectedImage];
+    
+    return [[YYInfiniteLoopView alloc] initWithImageUrls:imageUrls
+                                                  titles:titles
+                                        didSelectedImage:selectedImage];
 }
 
 - (instancetype)initWithImageUrls:(NSArray<NSString *> *)imageUrls
@@ -102,44 +105,55 @@
 - (void)setupAllSubView {
     
     /// UICollectionView
-    self.collectionView = [[UICollectionView alloc]
-                           initWithFrame:CGRectZero
-                           collectionViewLayout:[[YYInfiniteLoopViewLayout alloc] init]];
-    [self.collectionView setDelegate:self];
-    [self.collectionView setDataSource:self];
-    [self.collectionView setBackgroundColor:[UIColor whiteColor]];
-    [self.collectionView registerClass:[YYInfiniteLoopViewCell class] forCellWithReuseIdentifier:CellIdentifier];
-    [self addSubview:self.collectionView];
+    [self addSubview:self.collectionView = ({
+        self.collectionView = [[UICollectionView alloc]
+                               initWithFrame:CGRectZero
+                               collectionViewLayout:[YYInfiniteLoopViewLayout new]];
+        [self.collectionView setDelegate:self];
+        [self.collectionView setDataSource:self];
+        [self.collectionView setBackgroundColor:[UIColor whiteColor]];
+        [self.collectionView registerClass:[YYInfiniteLoopViewCell class]
+                forCellWithReuseIdentifier:CellIdentifier];
+        self.collectionView;
+    })];
     
     /// 添加一层蒙版
-    self.coverView = [[UIView alloc] init];
-    [self.coverView setHidden:self.hideCover];
-    [self.coverView setUserInteractionEnabled:NO];
-    [self.coverView setBackgroundColor:self.coverColor];
-    [self addSubview:self.coverView];
+    [self addSubview:self.coverView = ({
+        self.coverView = [[UIView alloc] init];
+        [self.coverView setHidden:self.hideCover];
+        [self.coverView setUserInteractionEnabled:NO];
+        [self.coverView setBackgroundColor:self.coverColor];
+        self.coverView;
+    })];
     
     /// 标题和分页索引的背景
-    self.backgroundView = [[UIImageView alloc] init];
-    [self.backgroundView setHidden:self.hideTitleLabel];
-    [self.backgroundView setBackgroundColor:self.bgViewColor];
-    [self.backgroundView setContentMode:UIViewContentModeScaleAspectFill];
-    [self.backgroundView setClipsToBounds:YES];
-    [self addSubview:self.backgroundView];
+    [self addSubview:self.backgroundView = ({
+        self.backgroundView = [[UIImageView alloc] init];
+        [self.backgroundView setHidden:self.hideTitleLabel];
+        [self.backgroundView setBackgroundColor:self.bgViewColor];
+        [self.backgroundView setContentMode:UIViewContentModeScaleAspectFill];
+        [self.backgroundView setClipsToBounds:YES];
+        self.backgroundView;
+    })];
     
     /// 标题标签
-    self.titleLabel = [[UILabel alloc] init];
-    [self.titleLabel setFont:self.titleTextFont];
-    [self.titleLabel setHidden:self.hideTitleLabel];
-    [self.titleLabel setTextColor:self.titleTextColor];
-    [self.titleLabel setTextAlignment:NSTextAlignmentLeft];
-    [self addSubview:self.titleLabel];
+    [self addSubview:self.titleLabel = ({
+        self.titleLabel = [[UILabel alloc] init];
+        [self.titleLabel setFont:self.titleTextFont];
+        [self.titleLabel setHidden:self.hideTitleLabel];
+        [self.titleLabel setTextColor:self.titleTextColor];
+        [self.titleLabel setTextAlignment:NSTextAlignmentLeft];
+        self.titleLabel;
+    })];
     
     /// 分页索引控件
-    self.pageControl = [[UIPageControl alloc] init];
-    [self.pageControl setHidesForSinglePage:YES];
-    [self.pageControl setPageIndicatorTintColor:self.pageIndicatorColor];
-    [self.pageControl setCurrentPageIndicatorTintColor:self.currentPageIndicatorColor];
-    [self addSubview:self.pageControl];
+    [self addSubview:self.pageControl = ({
+        self.pageControl = [[UIPageControl alloc] init];
+        [self.pageControl setHidesForSinglePage:YES];
+        [self.pageControl setPageIndicatorTintColor:self.pageIndicatorColor];
+        [self.pageControl setCurrentPageIndicatorTintColor:self.currentPageIndicatorColor];
+        self.pageControl;
+    })];
 }
 
 - (void)layoutSubviews {
