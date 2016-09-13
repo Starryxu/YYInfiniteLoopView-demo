@@ -17,7 +17,12 @@
 
 ### 注意, 本项目图片下载操作依赖[SDWebImage](https://github.com/rs/SDWebImage), 需自行安装此依赖库
 
-### 类的属性说明 :
+### 0913 更新, Version 0.2.0
+ * 新增自动轮播时的过渡动画(默认不开启), 提供12种过渡动画可以选择, 有一部分用到苹果的私有API, 使用请注意, 有可能审核会被拒, 请慎用, 啊哈哈哈...
+ * 另外有些动画支持过渡方向选择, 同样提供枚举进行设置, 具体使用可参考示例Demo
+ * 可以自由设置过渡动画的执行时间(有些动画的时间请按需调整), 默认1.0s
+
+### 主类的属性说明 :
   * 考虑到在项目中轮播图会有多种不同的展现方式, 所以提供了以下多种属性用来设置, 都有详细的注释说明
 ```objc
 /// 标题标签的位置
@@ -33,13 +38,39 @@ typedef NS_ENUM(NSUInteger, InfiniteLoopViewPagePosition) {
     InfiniteLoopViewPagePositionRight   // 居右
 };
 
+/// 过渡动画类型
+typedef NS_ENUM(NSUInteger, InfiniteLoopViewAnimationType) {
+    InfiniteLoopViewAnimationTypeNone,          // 默认,不设置
+    InfiniteLoopViewAnimationTypeFade,          // 交叉淡化过渡
+    InfiniteLoopViewAnimationTypeMoveIn,        // 新视图移到旧视图上面
+    InfiniteLoopViewAnimationTypePush,          // 新视图把旧视图推出去
+    InfiniteLoopViewAnimationTypeReveal,        // 将旧视图移开,显示下面的新视图
+    /* 以下是私有API,慎用,可能不能通过应用审核 */
+    InfiniteLoopViewAnimationTypePageCurl,              // 向上翻页
+    InfiniteLoopViewAnimationTypePageUnCurl,            // 向下翻页
+    InfiniteLoopViewAnimationTypeOglFlip,               // 平面翻转
+    InfiniteLoopViewAnimationTypeCube,                  // 立体翻转
+    InfiniteLoopViewAnimationTypeSuckEffect,            // 收缩抽离
+    InfiniteLoopViewAnimationTypeRippleEffect,          // 水波动效
+    InfiniteLoopViewAnimationTypeCameraIrisHollowOpen,  // 镜头快门开
+    InfiniteLoopViewAnimationTypeCameraIrisHollowClose  // 镜头快门关
+};
+
+/// 过渡动画方向
+typedef NS_ENUM(NSUInteger, InfiniteLoopViewAnimationDirection) {
+    InfiniteLoopViewAnimationDirectionRight, // 向右
+    InfiniteLoopViewAnimationDirectionLeft,  // 向左
+    InfiniteLoopViewAnimationDirectionTop,   // 向上
+    InfiniteLoopViewAnimationDirectionBottom // 向下
+};
+
 /** 代理属性 */
 @property (nonatomic, weak) id<YYInfiniteLoopViewDelegate> delegate;
 /** 是否开启自动轮播, 默认开启 */
 @property (nonatomic, assign, getter=isAutoPlayer) BOOL autoPlayer;
 /** 占位图片, 默认没有 */
 @property (nonatomic, strong) UIImage *placeholderImage;
-/** 定时器时间, 默认3s */
+/** 定时器时间, 默认3.0s */
 @property (nonatomic, assign) NSTimeInterval timeInterval;
 /** 标题和分页索引的背景颜色, 默认黑色, alpha值0.4 */
 @property (nonatomic, strong) UIColor *bgViewColor;
@@ -47,7 +78,7 @@ typedef NS_ENUM(NSUInteger, InfiniteLoopViewPagePosition) {
 @property (nonatomic, strong) UIFont *titleTextFont;
 /** 标题的字体颜色, 默认白色 */
 @property (nonatomic, strong) UIColor *titleTextColor;
-/** 分页索引的图片, 默认不设置 */
+/** 分页索引图片, 默认不设置 */
 @property (nonatomic, strong) UIImage *pageImage;
 /** 当前分页索引的图片, 默认不设置 */
 @property (nonatomic, strong) UIImage *currentPageImage;
@@ -59,6 +90,12 @@ typedef NS_ENUM(NSUInteger, InfiniteLoopViewPagePosition) {
 @property (nonatomic, assign) InfiniteLoopViewTitlePosition titlePosition;
 /** PageControl 展示的位置, 当设置标题位置为Top时, 此设置才有效, 默认居中 */
 @property (nonatomic, assign) InfiniteLoopViewPagePosition pagePosition;
+/** 枚举, 用于设置自动播放时的过渡动画, 默认没有动画 */
+@property (nonatomic, assign) InfiniteLoopViewAnimationType animationType;
+/** 枚举, 用于设置自动播放时的过渡动画方向, 默认向右 */
+@property (nonatomic, assign) InfiniteLoopViewAnimationDirection animationDirection;
+/** 过渡动画的执行时长, 默认1.0s */
+@property (nonatomic, assign) CFTimeInterval animationDuration;
 /** 是否隐藏标题, 默认为NO, 如果设置YES, pageControl 位置默认居中 */
 @property (nonatomic, assign, getter=isHideTitleLabel) BOOL hideTitleLabel;
 /** 是否隐藏蒙版, 默认为YES */
@@ -79,7 +116,7 @@ typedef NS_ENUM(NSUInteger, InfiniteLoopViewPagePosition) {
 /// 选中的图片索引, Block回调方式
 typedef void(^didSelectedImage)(NSInteger index);
 ```
-### 类的初始化方式 :
+### 主类的初始化方式 :
   * 按照官方的惯例, 我们同样可以使用 `类方法` 或 `实例方法` 来进行初始化
 ```objc
 /**
@@ -164,6 +201,15 @@ typedef void(^didSelectedImage)(NSInteger index);
     
     // 枚举, 设置pageControl的位置, 只有设置标题在顶部时此设置才有效, 默认居中
     // loopView.pagePosition = InfiniteLoopViewPagePositionCenter;
+    
+    // 过渡动画执行时间
+    loopView.animationDuration = 1.5f;
+    
+    // 过渡动画类型
+    loopView.animationType = InfiniteLoopViewAnimationTypeCube;
+    
+    // 过渡动画方向
+    loopView.animationDirection = InfiniteLoopViewAnimationDirectionRight;
     
     // 设置loopView的frame
     loopView.frame = CGRectMake(0, height*0.25+10, width, height*0.25);

@@ -33,6 +33,7 @@
     [self loopViewDelegate];
     [self loopViewBlock];
     [self loopViewTest];
+    [self loopViewTest2];
 }
 
 - (void)loopViewDelegate {
@@ -45,6 +46,9 @@
                                     }];
     // 设置代理
     loopView.delegate = self;
+    loopView.timeInterval = 5;
+    loopView.animationDuration = 1.5f;
+    loopView.animationType = InfiniteLoopViewAnimationTypeReveal;
     // 设置frame
     loopView.frame = CGRectMake(0, 0, width, height*0.25);
     [self.scrollView addSubview:loopView];
@@ -54,7 +58,7 @@
     // 实例方法
     YYInfiniteLoopView *loopView = [[YYInfiniteLoopView alloc]
                                     initWithImageUrls:self.imgUrls
-                                    titles:self.titles
+                                    titles:nil
                                     didSelectedImage:^(NSInteger index) {
                                         [self didSelectedImageWithIndex:index];
                                     }];
@@ -62,7 +66,7 @@
     loopView.hideCover = NO;
     
     // 是否自动轮播
-    loopView.autoPlayer = NO;
+    loopView.autoPlayer = YES;
     
     // 设置轮播时间
     // loopView.timeInterval = 1.5f;
@@ -96,6 +100,15 @@
     // 枚举, 设置pageControl的位置, 只有设置标题在顶部时此设置才有效, 默认居中
     // loopView.pagePosition = InfiniteLoopViewPagePositionCenter;
     
+    // 过渡动画执行时间
+    loopView.animationDuration = 1.5f;
+    
+    // 过渡动画类型
+    loopView.animationType = InfiniteLoopViewAnimationTypeCube;
+    
+    // 过渡动画方向
+    loopView.animationDirection = InfiniteLoopViewAnimationDirectionRight;
+    
     // 设置frame
     loopView.frame = CGRectMake(0, height*0.25+10, width, height*0.25);
     
@@ -117,7 +130,27 @@
     loopView.currentPageIndicatorColor = [UIColor blueColor];
     loopView.titlePosition = InfiniteLoopViewTitlePositionTop;
     loopView.pagePosition = InfiniteLoopViewPagePositionLeft;
+    loopView.animationType = InfiniteLoopViewAnimationTypePageCurl;
+    loopView.animationDirection = InfiniteLoopViewAnimationDirectionBottom;
     loopView.frame = CGRectMake(0, height*0.5+20, width, height*0.25);
+    [self.scrollView addSubview:loopView];
+}
+
+- (void)loopViewTest2 {
+    YYInfiniteLoopView *loopView = [YYInfiniteLoopView
+                                    infiniteLoopViewWithImageUrls:self.imgUrls
+                                    titles:self.titles
+                                    didSelectedImage:^(NSInteger index) {
+                                        [self didSelectedImageWithIndex:index];
+                                    }];
+    loopView.hideTitleLabel = YES;
+    loopView.titlePosition = InfiniteLoopViewTitlePositionTop;
+    loopView.pagePosition = InfiniteLoopViewPagePositionRight;
+    loopView.animationDuration = 2.0f;
+    loopView.animationType = InfiniteLoopViewAnimationTypeRippleEffect;
+    loopView.frame = CGRectMake(0, height*0.75+30, width, height*0.25);
+    loopView.pageIndicatorColor = [UIColor orangeColor];
+    loopView.currentPageIndicatorColor = [UIColor magentaColor];
     [self.scrollView addSubview:loopView];
 }
 
@@ -168,10 +201,10 @@
 - (NSArray *)imgUrls {
     if (!_imgUrls) {
         _imgUrls = @[@"http://desk.fd.zol-img.com.cn/t_s1280x1024c5/g5/M00/06/0F/ChMkJ1eB42-IXICZAC-b2z1kN5IAATZEAGIpKQAL5vz687.jpg",
-                       @"http://desk.fd.zol-img.com.cn/t_s1280x1024c5/g5/M00/0F/0A/ChMkJ1eZ8OOITLc2AAQWEZjZFAgAAT71gKtNRQABBYp187.jpg",
-                       @"http://desk.fd.zol-img.com.cn/t_s1280x1024c5/g5/M00/06/0F/ChMkJleB422IXV93ACmx9ykNKG8AATZEAFaBoMAKbIP392.jpg",
-                       @"http://desk.fd.zol-img.com.cn/t_s1280x1024c5/g5/M00/00/04/ChMkJ1ebRfuIfC-3AAQNjkmPpFYAAT-PwLA1wYABA2m812.jpg",
-                       @"http://desk.fd.zol-img.com.cn/t_s1280x1024c5/g5/M00/0F/01/ChMkJleYmTCID1AzAAau5xfqy0UAAT5igN01VIABq7_951.jpg"];
+                     @"http://desk.fd.zol-img.com.cn/t_s1280x1024c5/g5/M00/0F/0A/ChMkJ1eZ8OOITLc2AAQWEZjZFAgAAT71gKtNRQABBYp187.jpg",
+                     @"http://desk.fd.zol-img.com.cn/t_s1280x1024c5/g5/M00/06/0F/ChMkJleB422IXV93ACmx9ykNKG8AATZEAFaBoMAKbIP392.jpg",
+                     @"http://desk.fd.zol-img.com.cn/t_s1280x1024c5/g5/M00/00/04/ChMkJ1ebRfuIfC-3AAQNjkmPpFYAAT-PwLA1wYABA2m812.jpg",
+                     @"http://desk.fd.zol-img.com.cn/t_s1280x1024c5/g5/M00/0F/01/ChMkJleYmTCID1AzAAau5xfqy0UAAT5igN01VIABq7_951.jpg"];
     }
     return _imgUrls;
 }
@@ -192,7 +225,7 @@
         _scrollView = [[UIScrollView alloc] init];
         _scrollView.frame = self.view.bounds;
         _scrollView.backgroundColor = [UIColor clearColor];
-        _scrollView.contentSize = CGSizeMake(width, height+100);
+        _scrollView.contentSize = CGSizeMake(width, height+120);
         _scrollView.showsVerticalScrollIndicator = NO;
     }
     return _scrollView;
