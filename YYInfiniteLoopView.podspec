@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "YYInfiniteLoopView"
-  s.version      = “0.2.0”
+  s.version      = "0.2.0"
   s.summary      = "使用UICollectionView封装的无限轮播视图,使用简单,提供多种属性自由设置样式."
   s.description  = <<-DESC
                     使用UICollectionView封装的无限轮播视图,使用简单,提供多种属性自由设置样式.
