@@ -17,12 +17,12 @@
 
 ### 注意, 本项目图片下载操作依赖[SDWebImage](https://github.com/rs/SDWebImage), 需自行安装此依赖库
 
-### 0913 更新, Version 0.2.0
- * 新增自动轮播时的过渡动画(默认不开启), 提供12种过渡动画可以选择, 有一部分用到苹果的私有API, 使用请注意, 有可能审核会被拒, 请慎用, 啊哈哈哈...
+## 0913 更新, Version 0.2.0
+ * 新增自动轮播时的过渡动画(默认不开启), 提供12种过渡动画可以选择, 有一部份用到苹果的私有API, 使用请注意, 有可能审核会被拒, 请慎用, 啊哈哈哈...
  * 另外有些动画支持过渡方向选择, 同样提供枚举进行设置, 具体使用可参考示例Demo
  * 可以自由设置过渡动画的执行时间(有些动画的时间请按需调整), 默认1.0s
 
-### 主类的属性说明 :
+## 主类的属性说明 :
   * 考虑到在项目中轮播图会有多种不同的展现方式, 所以提供了以下多种属性用来设置, 都有详细的注释说明
 ```objc
 /// 标题标签的位置
@@ -103,7 +103,7 @@ typedef NS_ENUM(NSUInteger, InfiniteLoopViewAnimationDirection) {
 /** 蒙版的颜色, 默认为黑色, alpha值0.3 */
 @property (nonatomic, strong) UIColor *coverColor;
 ```
-### 点击图片跳转到对应的控制器, 有两种回调方式, 怎么好用怎么来
+### 点击图片跳转到对应的控制器, 有两种回调方式
   * 第☝️, 使用代理的方式, 只需设置代理, 遵守代理协议 `YYInfiniteLoopViewDelegate`, 实现代理方法即可
 ```objc
 @optional
@@ -116,7 +116,7 @@ typedef NS_ENUM(NSUInteger, InfiniteLoopViewAnimationDirection) {
 /// 选中的图片索引, Block回调方式
 typedef void(^didSelectedImage)(NSInteger index);
 ```
-### 主类的初始化方式 :
+## 主类的初始化方式 :
   * 按照官方的惯例, 我们同样可以使用 `类方法` 或 `实例方法` 来进行初始化
 ```objc
 /**
