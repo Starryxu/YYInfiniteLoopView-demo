@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/Kejiasir/YYInfiniteLoopView-demo.svg?branch=master)](https://travis-ci.org/Kejiasir/YYInfiniteLoopView-demo)
 [![CocoaPods](https://img.shields.io/cocoapods/v/YYInfiniteLoopView.svg)](http://cocoadocs.org/docsets/YYInfiniteLoopView)
 [![CocoaPods](https://img.shields.io/cocoapods/p/YYInfiniteLoopView.svg)](http://cocoadocs.org/docsets/YYInfiniteLoopView)
-[![CocoaPods](https://img.shields.io/cocoapods/l/YYInfiniteLoopView.svg)](https://raw.githubusercontent.com/kejiasir/YYInfiniteLoopView/master/LICENSE)
+[![CocoaPods](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://raw.githubusercontent.com/kejiasir/YYInfiniteLoopView/master/LICENSE)
 
 ## 使用UICollectionView封装的无限轮播视图, 使用简单, 提供多种属性自由设置
 
