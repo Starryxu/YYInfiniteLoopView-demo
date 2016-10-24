@@ -6,11 +6,11 @@
 ## 使用UICollectionView封装的无限轮播视图, 使用简单, 提供多种属性自由设置
 
 ### 如何集成到您的项目 ?
-* 一, 手动安装
+* 手动安装
   * 将本项目 Clone 或 Download 下来, 将 Demo 工程中的 `YYInfiniteLoopView` 文件夹拷贝到您的项目中
   * 在需要使用的类中导入主头文件 `#import "YYInfiniteLoopView.h"`, 注意是使用双引号的方式import哦
   
-* 二, 使用CocoaPods安装
+* 使用CocoaPods安装
   * 在 Podfile 文件中添加 `pod 'YYInfiniteLoopView', '~> 0.2.0'`
   * 使用终端执行 `pod install` 或 `pod update` 命令, 将自动下载依赖库文件
   * 同样的在需要使用的类中导入主头文件 `#import <YYInfiniteLoopView.h>`, 这里则需使用尖括号的方式
@@ -26,6 +26,7 @@
 
 ## 主类的属性说明 :
   * 考虑到在项目中轮播图会有多种不同的展现方式, 所以提供了以下多种属性用来设置, 都有详细的注释说明
+  
 ```objc
 /// 标题标签的位置
 typedef NS_ENUM(NSUInteger, InfiniteLoopViewTitlePosition) {
@@ -66,6 +67,8 @@ typedef NS_ENUM(NSUInteger, InfiniteLoopViewAnimationDirection) {
     InfiniteLoopViewAnimationDirectionBottom // 向下
 };
 
+@interface YYInfiniteLoopView : UIView
+
 /** 代理属性 */
 @property (nonatomic, weak) id<YYInfiniteLoopViewDelegate> delegate;
 /** 是否开启自动轮播, 默认开启 */
@@ -104,9 +107,12 @@ typedef NS_ENUM(NSUInteger, InfiniteLoopViewAnimationDirection) {
 @property (nonatomic, assign, getter=isHideCover) BOOL hideCover;
 /** 蒙版的颜色, 默认为黑色, alpha值0.3 */
 @property (nonatomic, strong) UIColor *coverColor;
+
+@end
 ```
 ### 点击图片跳转到对应的控制器, 有两种回调方式
   * 第☝️, 使用代理的方式, 只需设置代理, 遵守代理协议 `YYInfiniteLoopViewDelegate`, 实现代理方法即可
+  
 ```objc
 @optional
 /// 代理方法, 获得当前点击的图片索引
@@ -114,12 +120,14 @@ typedef NS_ENUM(NSUInteger, InfiniteLoopViewAnimationDirection) {
         didSelectedImage:(NSInteger)selectedImageIndex;
 ```
   * 第✌️, 使用Block 的方式, 在初始化的同时即可实现点击事件的回调
+  
 ```objc 
 /// 选中的图片索引, Block回调方式
 typedef void(^didSelectedImage)(NSInteger index);
 ```
 ## 主类的初始化方式 :
   * 按照官方的惯例, 我们同样可以使用 `类方法` 或 `实例方法` 来进行初始化
+  
 ```objc
 /**
  *  类方法初始化
@@ -222,5 +230,5 @@ typedef void(^didSelectedImage)(NSInteger index);
 <img src="001.gif?v=3&s=100" alt="GitHub" title="demo预览效果" width="260" height="480"/>
 
 
-##License
+## License
 **InfiniteLoopView 使用 MIT 许可证，详情见 LICENSE 文件**
